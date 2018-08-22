@@ -14,7 +14,7 @@ import picamera
 
 # create socket and bind host
 client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-client_socket.connect(('192.168.43.95', 3001))
+client_socket.connect(('192.168.43.225', 3001))
 connection = client_socket.makefile('wb')
 
 try:
