@@ -15,7 +15,7 @@ class ObjDistanceCalc(object):
     def create(self):
         print 'creating Object Distance Calculator...',
         if os.path.isfile(self.path):
-            with open('../../robot_test/cam_callibration/cam_params.json') as p:
+            with open(self.path) as p:
                 self.cparam = json.load(p)
             
             self.alpha = 8.0 * math.pi / 180
