@@ -8,12 +8,12 @@ import os.path
 class ObjDistanceCalc(object):
   
     def __init__(self):
-        print ('initializing Object Distance Calculator...'),
+        print ('initializing Object Distance Calculator...', end="", flush=True)
         self.path = '../../robot_test/cam_callibration/cam_params.json'
         print ('done!')
 
     def create(self):
-        print ('creating Object Distance Calculator...'),
+        print ('creating Object Distance Calculator...', end="", flush=True)
         if os.path.isfile(self.path):
             with open(self.path) as p:
                 self.cparam = json.load(p)
@@ -36,8 +36,8 @@ class ObjDistanceCalc(object):
         return d
 
     def getCameraSpecs(self):
-      print("#####Camera Specs#####")
-      print("alpha: %f" % self.alpha)
-      print("v0: %f" % self.v0)
-      print("ay: %f" % self.ay)
-      print("######################")
+    	print("#####Camera Specs#####")
+    	print("alpha: %f" % self.alpha)
+    	print("v0: %f" % self.v0)
+    	print("ay: %f" % self.ay)
+    	print("######################")

@@ -39,7 +39,7 @@ if __name__ == '__main__':
 
     command_q = Queue()
 
-    print ('starting dummy thread...'),
+    print ('starting dummy thread...', end="", flush=True)
     dummy_thread = threading.Thread(target=stopper_thread, args=(False, command_q))
     dummy_thread.start()
     print ('done!')

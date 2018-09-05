@@ -12,19 +12,19 @@ class Robot():
     initialize robot
     """
     def __init__(self):
-        print ('Initializing Robot components...')
-        stopSignClassifier_path = '../robot_ai/obj_classifier/model/stop_sign.xml'
-        trafficLightClassifier_path = '../robot_ai/obj_classifier/model/traffic_light.xml'
+        print ('Initializing Robot components...',end="", flush=True)
+        self.stopSignClassifier_path = '../robot_ai/obj_classifier/model/stop_sign.xml'
+        self.trafficLightClassifier_path = '../robot_ai/obj_classifier/model/traffic_light.xml'
         self.createErrorCnt = 0
         self.navFlag = True
-        self.nav_engine =  NeuralNetwork()
-        self.dist_calc = ObjDistanceCalc()
-        self.stopSign_classifier =  ObjectClassifier('StopSign', stopSignClassifier_path)
-        self.trafficLight_classifier =  ObjectClassifier('TrafficLight', trafficLightClassifier_path)
-        print ('done initializing Robot components!')
+        print ('done!')
 
     def create(self):
         print ('Creating Robot components...')
+        self.nav_engine =  NeuralNetwork()
+        self.dist_calc = ObjDistanceCalc()
+        self.stopSign_classifier =  ObjectClassifier('StopSign', self.stopSignClassifier_path)
+        self.trafficLight_classifier =  ObjectClassifier('TrafficLight', self.trafficLightClassifier_path)
         self.createErrorCnt += self.nav_engine.create()
         self.createErrorCnt += self.dist_calc.create()
         self.createErrorCnt += self.stopSign_classifier.create()

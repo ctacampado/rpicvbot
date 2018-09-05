@@ -7,7 +7,7 @@ class ObjectClassifier():
     
     def __init__(self, name, path):
         self.name = name
-        print ('initializing %s Classifier...' % self.name),
+        print ('initializing %s Classifier...' % self.name, end="", flush=True)
         self.path = path
         print ('done!')
 
