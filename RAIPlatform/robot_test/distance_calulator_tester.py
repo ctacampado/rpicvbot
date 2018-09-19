@@ -110,7 +110,7 @@ class VideoStreamHandler(object):
         
     def handle(self):
         print("handler function")
-        h1 = 15.5 - 8
+        h1 = 3.5
         distanceCalc = ObjDistanceCalc()
         ret = distanceCalc.create()
 
