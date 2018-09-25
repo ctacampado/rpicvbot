@@ -1,3 +1,7 @@
+"""
+Reference:
+https://github.com/hamuchiwa/AutoRCCar
+"""
 __author__ = 'ctacampado'
 
 import cv2
@@ -5,6 +9,8 @@ import numpy as np
 import math
 import json
 import os.path
+
+
 
 def extractImageFromStream(stream_bytes):
     first = stream_bytes.find(b'\xff\xd8')
