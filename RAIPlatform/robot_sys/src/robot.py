@@ -6,7 +6,7 @@ import socket
 import numpy as np
 import sys
 from neural_network import NeuralNetwork
-from vision import extractImageFromStream, ObjDistanceCalc, ObjectClassifier
+from vision import extractImageFromStream, detectObjAndCalcDist, ObjDistanceCalc, ObjectClassifier
 from concurrent.futures import ThreadPoolExecutor
 
 def func():
@@ -55,19 +55,6 @@ class Robot(object):
             executor.submit(self.startNavigation)
         print("all threads closed!")
 
-    #todo: move to vision.py
-    def detectObjsAndCalcDist(self, h1, h2, gray, image):
-        d1 = 0
-        d2 = 0
-        #detect objects
-        v_param1 = self.stopSign_classifier.detect(self.stopSign_classifier.classifier, gray, image)
-        v_param2 = self.trafficLight_classifier.detect(self.trafficLight_classifier.classifier, gray, image)
-        # distance measurement
-        if v_param1 > 0 or v_param2 > 0:
-            d1 = self.dist_calc.calculate(v_param1, h1, 300, image)
-            d2 = self.dist_calc.calculate(v_param2, h2, 100, image)
-        return v_param1, v_param2, d1, d2, image
-
     def waitForComponentConnection(self, component, socket):
         print("waiting for %s connection..." % component)
         connection, client_address = socket.accept()
@@ -100,16 +87,14 @@ class Robot(object):
             try:
                 stream_bytes += connection.read(1024)
                 if not stream_bytes: break
-                img_ready, stream_bytes, gray, image = extractImageFromStream(stream_bytes)
-                if img_ready:
-                    v_param1, v_param2, d1, d2, image = self.detectObjsAndCalcDist(h1, h2, gray, image)
-
+                img_is_ready, stream_bytes, gray, image = extractImageFromStream(stream_bytes)
+                if img_is_ready:
+                    v_param1, d1, image = detectObjAndCalcDist(h1, 300, gray, image, self.stopSign_classifier, self.dist_calc)
+                    v_param2, d2, image = detectObjAndCalcDist(h2, 100, gray, image, self.trafficLight_classifier, self.dist_calc)
                     cv2.imshow('image', image)
-
                     if cv2.waitKey(1) & 0xFF == ord('q'):
                         self.navFlag = False
                         break
-
             except (KeyboardInterrupt, SystemExit):
                 self.navFlag = False
                 raise

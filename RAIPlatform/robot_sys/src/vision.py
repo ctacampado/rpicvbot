@@ -10,7 +10,14 @@ import math
 import json
 import os.path
 
-
+def detectObjAndCalcDist(h, x_shift, gray, image, classifier, dist_calc):
+    d = 0
+    #detect objects
+    v_param = classifier.detect(classifier.classifier, gray, image)
+    # distance measurement
+    if v_param > 0:
+        d = dist_calc.calculate(v_param, h, x_shift, image)
+    return v_param, d, image
 
 def extractImageFromStream(stream_bytes):
     first = stream_bytes.find(b'\xff\xd8')
